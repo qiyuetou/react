@@ -6,16 +6,16 @@
 import React, { Component } from 'react';
 
 import ReactDOM from 'react-dom';
+
 class Demo extends React.Component{
     constructor(props){
         super(props);
     }
     render(){
-        return(
-            <div>这是一个demo</div>
-        )
+        return(<div>这是一个demo</div>)
     }
 }
+
 class Test extends React.Component{
     constructor(props){
         super(props);
