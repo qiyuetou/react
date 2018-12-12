@@ -1,6 +1,6 @@
-const ReactMount = require('./ReactMount');
+import ReactMount from './ReactMount';
+
 const ReactDOM = {
-    //findDOMNode: findDOMNode,
     render: ReactMount.render,
 }
 

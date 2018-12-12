@@ -1,23 +1,20 @@
 
 //npm install -g webpack  //全局安装
 
-//npm install --save-dev webpack  //安装到你的项目目录
-// npm install --save-dev webpack-dev-server
-//npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
-//npm install --save-dev style-loader css-loader
-//npm install --save-dev postcss-loader autoprefixer
-
-//npm install --save react react-dom
-//npm install --save-dev html-webpack-plugin
-
 //npm install --save-dev @babel/core @babel/cli @babel/preset-env
 //npm install --save @babel/polyfill
 
 // 一个常见的`webpack`配置文件
+//npm install --save-dev webpack  webpack-cli webpack-dev-server
+//npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+//npm install --save-dev style-loader css-loader
+//npm install --save-dev postcss-loader autoprefixer
+//npm i react react-dom --save
+////npm install --save-dev html-webpack-plugin
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -46,7 +43,7 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: /(\.jsx|\.js)$/,
+            test: /\.(js|jsx)$/,//  /(\.jsx|\.js)$/
             use: {
                 loader: "babel-loader"
             },

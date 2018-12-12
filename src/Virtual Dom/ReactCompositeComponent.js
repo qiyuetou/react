@@ -12,7 +12,10 @@ function ReactCompositeComponent(element){
     this._instance = null;
 }
 
-ReactCompositeComponent.prototype.receiveComponent = function(){};
+
+ReactCompositeComponent.prototype.receiveComponent = function(){
+
+};
 
 
 /**
