@@ -14,24 +14,18 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     mode: 'development',
 
-    //entry: __dirname + "/src/index.js", //已多次提及的唯一入口文件
+    //已多次提及的唯一入口文件
     entry:{
         app: './src/index.js',
-        //print: './src/print.js'
     },
     devtool: 'source-map',
 
     output: {
-        //path: __dirname + "/dist/",
-        //filename: "bundle-[hash].js"
         filename: "bundle.js",
-        // filename: 'bundle.js',
-        // filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
     devServer: {
@@ -68,10 +62,7 @@ module.exports = {
         new webpack.BannerPlugin('测试react'),
         new HtmlWebpackPlugin({
            template: path.join(__dirname, "/index.html") //new 一个这个插件的实例，并传入相关的参数
-        }),
-        //new webpack.optimize.OccurrenceOrderPlugin(),
-        //new webpack.optimize.UglifyJsPlugin(),
-        //new ExtractTextPlugin("style.css")
+        })
     ]
 };
 

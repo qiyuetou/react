@@ -50,14 +50,14 @@ const ReactMount = {
 
         //事务的形式调用mountComponentIntoNode
         var markup = componentInstance.mountComponent()
-        
-        ReactMount._mountImageIntoNode(markup, container,instance);
+
+        ReactMount._mountImageIntoNode(markup, container);
         console.log('----markup',markup)
     },
     _mountImageIntoNode : function(markup, container,instance){
-        node.innerHTML = markup;
-        instance._hostNode = container.firstChild;
-        //ReactDOMComponentTree.precacheNode(instance, container.firstChild);
+        container.innerHTML = markup;
+        console.log('---container',markup);
+        markup._hostNode = container.firstChild;
 
     },
     mountComponentIntoNode : function(){

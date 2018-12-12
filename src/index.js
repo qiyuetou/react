@@ -1,6 +1,7 @@
 /**
  * Created by daifei on 2018/11/27
  */
+
 // 'use strict';
 //
 // import React, { Component } from 'react';
@@ -54,6 +55,7 @@
 //
 // ReactDOM.render(<Test text="呵呵"/> ,document.getElementById('root'));
 
+
 "use strict";
 import React from './Virtual Dom/React';
 import ReactDom from './Virtual Dom/ReactDom';
@@ -74,6 +76,9 @@ let Ele = React.createElement("ul", { "class": "ul" },
 console.log('----Ele',Ele);
 
 ReactDom.render(<Ele/>,document.getElementById('root'));
+
+
+
 //render
 //根据element的类型不同，分别实例化ReactDOMTextComponent, ReactDOMComponent, ReactCompositeComponent类。
 // 这些类用来管理ReactElement,负责将不同的ReactElement转化成DOM(mountComponent方法),负责更新DOM(receiveComponent方法，updateComponent方法, 如下会介绍)等。
