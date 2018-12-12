@@ -1,4 +1,4 @@
-import ReactMount from './ReactMount';
+import {ReactMount} from './ReactMount';
 
 const ReactDOM = {
     render: ReactMount.render,

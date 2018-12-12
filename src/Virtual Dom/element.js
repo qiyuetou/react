@@ -77,4 +77,7 @@ ReactElement.createElement = function(type,config,children) {
     return ReactElement(type, key, ref, self, source, ReactCurrentOwner, props);
 }
 
+ReactElement.isValidElement = function (object) {
+    return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+};
 export {ReactElement};

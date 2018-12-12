@@ -95,10 +95,10 @@ function instantiateReactComponent(node) {
     }
 
     // 初始化参数，这两个参数是DOM diff时用到的
-    instance._mountIndex = 0;
-    instance._mountImage = null;
+    //instance._mountIndex = 0;
+    //instance._mountImage = null;
 
     return instance;
 }
 
-export default ReactMount
+export {ReactMount,instantiateReactComponent}
