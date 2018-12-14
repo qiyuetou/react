@@ -1,17 +1,9 @@
 import {ReactElement} from './element';
+
+import ReactDOMComponent from './ReactDOMComponent';
+import ReactDOMTextComponent from './ReactDOMTextComponent';
 import ReactCompositeComponent from './ReactCompositeComponent';
-import ReactDomComponent from './ReactDomComponent';
 
-
-var topLevelRootCounter = 1;
-var TopLevelWrapper = function () {
-    this.rootID = topLevelRootCounter++;
-};
-TopLevelWrapper.prototype.isReactComponent = {};
-
-TopLevelWrapper.prototype.render = function () {
-    return this.props;
-};
 
 //比较两个createElement 返回是否需要更新
 function shouldUpdateReactComponent(prevElement, nextElement) {
@@ -29,52 +21,33 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
         return nextType === 'object' && prevElement.type === nextElement.type && prevElement.key === nextElement.key;
     }
 }
+
 const ReactMount = {
+    nextNodeIndex :0,
     render: function (nextElement, container, callback) {
-        return ReactMount._renderSubtreeIntoContainer(nextElement,container,callback);
-    },
-    _renderSubtreeIntoContainer(nextElement, container, callback){
-        // 包装ReactElement，将nextElement挂载到wrapper的props属性下，这段代码不是很关键
-        var nextWrappedElement = ReactElement(TopLevelWrapper, null, null, null, null, null, nextElement);
-        // 初始化，渲染组件，然后插入到DOM中。_renderNewRootComponent很关键，后面详细分析
-        var component = ReactMount._renderNewRootComponent(nextWrappedElement, container);
-        // render方法中带入的回调，ReactDOM.render()调用时一般不传入
-        if (callback) {
+       const nextWrappedElement = instantiateReactComponent(nextElement);
+       const currentelement = nextWrappedElement._currentelement;
+       //const rootID = nextWrappedElement._rootNodeID;
+        
+       const markup = nextWrappedElement.mountComponent(ReactMount.nextNodeIndex++);
+       container.innerHTML = markup;
+       if (callback) {
             callback.call(component);
         }
 
-        return component;
-    },
-    _renderNewRootComponent : function(nextElement,container){
-        var componentInstance = instantiateReactComponent(nextElement);
-
-        //事务的形式调用mountComponentIntoNode
-        var markup = componentInstance.mountComponent()
-
-        ReactMount._mountImageIntoNode(markup, container);
-        console.log('----markup',markup)
-    },
-    _mountImageIntoNode : function(markup, container,instance){
-        container.innerHTML = markup;
-        console.log('---container',markup);
-        markup._hostNode = container.firstChild;
-
-    },
-    mountComponentIntoNode : function(){
-        // 调用对应ReactComponent中的mountComponent方法来渲染组件，这个是React生命周期的重要方法。后面详细分析。
-        // mountComponent返回React组件解析的HTML。不同的ReactComponent的mountComponent策略不同，可以看做多态
-        // 上面的<h1>Hello, world!</h1>, 对应的是ReactDOMTextComponent，最终解析成的HTML为
-        // <h1 data-reactroot="">Hello, world!</h1>
-        //var markup = mountComponent(wrapperInstance, transaction, null, ReactDOMContainerInfo(wrapperInstance, container), context);
-        //ReactMount._mountImageIntoNode(markup, container, wrapperInstance, shouldReuseMarkup, transaction);
     }
 }
 
+/**
+ * 根据给node typeof 判断是啥类型的组件 然后去生成对应类型组件
+ * @param node
+ * @returns {*}
+ */
 function instantiateReactComponent(node) {
     let instance;
     if (node === null || node === false) {
         //创建空组件
-        instance = null;
+        instance = new ReactEmptyComponent(node);
     } else if (typeof node === 'object') {
         // 组件对象，包括DOM原生的和React自定义组件
         var element = node;
@@ -95,10 +68,35 @@ function instantiateReactComponent(node) {
     }
 
     // 初始化参数，这两个参数是DOM diff时用到的
-    //instance._mountIndex = 0;
-    //instance._mountImage = null;
+    instance._mountIndex = 0;
+    instance._mountImage = null;
 
     return instance;
 }
+
+
+
+/**
+ * 根据元素类型实例化一个具体的component
+ * @param {*} node ReactElement
+ * @return {*} 返回一个具体的component实例
+ */
+// function instantiateReactComponent(node) {
+//     // 文本节点的情况
+//     if (typeof node === "string" || typeof node === "number") {
+//         return new ReactDOMTextComponent(node);
+//     }
+//     // 浏览器默认节点的情况
+//     if (typeof node === "object" && typeof node.type === "string") {
+//         // 注意这里，使用了一种新的component
+//         return new ReactDOMComponent(node);
+//     }
+//     // 自定义的元素节点
+//     if (typeof node === "object" && typeof node.type === "function") {
+//         // 注意这里，使用新的component,专门针对自定义元素
+//         return new ReactCompositeComponent(node);
+//     }
+// }
+
 
 export {ReactMount,instantiateReactComponent}

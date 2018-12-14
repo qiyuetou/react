@@ -1,17 +1,11 @@
 
-function ReactComponent(props, context, updater) {
-    this.props = props;
-    this.context = context;
-    this.refs = emptyObject;
+function ReactComponent(){
 
-    this.updater = updater || ReactNoopUpdateQueue;
-}
-
-ReactComponent.prototype.isReactComponent = {};
-
-ReactComponent.prototype.setState = function (partialState, callback) {
-    this.updater.enqueueSetState(this, partialState);
-
+	
 };
+
+ReactComponent.prototype.setState = function(nextState){};
+
+
 
 export default ReactComponent;

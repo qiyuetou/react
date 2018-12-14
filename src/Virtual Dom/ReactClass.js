@@ -1,16 +1,19 @@
-const ReactClass = {
-    createClass : function(spec){
-        const Constructor = function(props, context, updater){
-            this.props = props;
-            this.context = context;
-            this.refs = {};
-            this.updater = updater || ReactNoopUpdateQueue;
 
-            this.state = null;
-        }
+import ReactComponent from './ReactComponent';
+var ReactClassComponent = function () {};
+Object.assign(ReactClassComponent.prototype, ReactComponent.prototype);
+var ReactClass = {
+	createClass : function(spec){
+		 var Constructor = function (props) {
+		 	this.props = props;
+		 	this.state = this.getInitialState ? this.getInitialState() : null;
+		 }
+		 Constructor.prototype = new ReactClassComponent();
+    	 Constructor.prototype.constructor = Constructor;
 
-        return Constructor;
-    }
+    	 Object.assign(Constructor.prototype, spec);
+    	 return Constructor;
+	}
 }
 
 export default ReactClass;
